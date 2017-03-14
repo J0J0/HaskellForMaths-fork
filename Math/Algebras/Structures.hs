@@ -2,7 +2,7 @@
 
 {-# LANGUAGE MultiParamTypeClasses, NoMonomorphismRestriction #-}
 {-# LANGUAGE FlexibleInstances, TypeSynonymInstances #-}
-{-# LANGUAGE IncoherentInstances #-}
+{-# LANGUAGE FlexibleContexts #-}
 
 -- |A module defining various algebraic structures that can be defined on vector spaces
 -- - specifically algebra, coalgebra, bialgebra, Hopf algebra, module, comodule
@@ -193,7 +193,7 @@ instance Coalgebra k c => Comodule k c c where
 
 -- Kassel p57-8
 
-instance (Eq k, Num k, Ord a, Ord u, Ord v, Algebra k a, Module k a u, Module k a v)
+instance {-# OVERLAPPING #-} (Eq k, Num k, Ord a, Ord u, Ord v, Algebra k a, Module k a u, Module k a v)
          => Module k (Tensor a a) (Tensor u v) where
     -- action x = nf $ x >>= action'
     action = linear action'
