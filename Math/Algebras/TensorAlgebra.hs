@@ -61,15 +61,14 @@ injectTA' = injectTA . return
 -- where T(A) is the tensor algebra Vect k (TensorAlgebra a).
 -- f' will agree with f on A itself (considered as a subspace of T(A)).
 -- In other words, f = f' . injectTA
-liftTA :: (Eq k, Num k, Ord b, Show b, Algebra k b) =>
+liftTA :: (Eq k, Num k, Ord b, Algebra k b) =>
      (Vect k a -> Vect k b) -> Vect k (TensorAlgebra a) -> Vect k b
 liftTA f = linear (\(TA _ xs) -> product [f (return x) | x <- xs])
--- The Show b constraint is required because we use product (and Num requires Show)!!
 
 -- |Given a set\/type A\/a, and a vector space B = Vect k b, where B is also an algebra,
 -- lift a function f: A -> B to an algebra morphism f': T(A) -> B.
 -- f' will agree with f on A itself. In other words, f = f' . injectTA'
-liftTA' :: (Eq k, Num k, Ord b, Show b, Algebra k b) =>
+liftTA' :: (Eq k, Num k, Ord b, Algebra k b) =>
      (a -> Vect k b) -> Vect k (TensorAlgebra a) -> Vect k b
 liftTA' = liftTA . linear
 -- liftTA' f = linear (\(TA _ xs) -> product [f x | x <- xs])
@@ -79,7 +78,7 @@ liftTA' = liftTA . linear
 -- |Tensor algebra is a functor from k-Vect to k-Alg.
 -- The action on objects is Vect k a -> Vect k (TensorAlgebra a).
 -- The action on arrows is f -> fmapTA f.
-fmapTA :: (Eq k, Num k, Ord b, Show b) =>
+fmapTA :: (Eq k, Num k, Ord b) =>
     (Vect k a -> Vect k b) -> Vect k (TensorAlgebra a) -> Vect k (TensorAlgebra b)
 fmapTA f = liftTA (injectTA . f)
 -- fmapTA f = linear (\(TA _ xs) -> product [injectTA (f (return x)) | x <- xs])
@@ -88,18 +87,18 @@ fmapTA f = liftTA (injectTA . f)
 -- we obtain a functor Set -> k-Alg, the free algebra functor.
 -- The action on objects is a -> Vect k (TensorAlgebra a).
 -- The action on arrows is f -> fmapTA' f.
-fmapTA' :: (Eq k, Num k, Ord b, Show b) =>
+fmapTA' :: (Eq k, Num k, Ord b) =>
     (a -> b) -> Vect k (TensorAlgebra a) -> Vect k (TensorAlgebra b)
 fmapTA' = fmapTA . fmap
 -- fmapTA' f = liftTA' (injectTA' . f)
 -- fmapTA' f = linear (\(TA _ xs) -> product [injectTA' (f x) | x <- xs])
 
 
-bindTA :: (Eq k, Num k, Ord b, Show b) =>
+bindTA :: (Eq k, Num k, Ord b) =>
     Vect k (TensorAlgebra a) -> (Vect k a -> Vect k (TensorAlgebra b)) -> Vect k (TensorAlgebra b)
 bindTA = flip liftTA
 
-bindTA' :: (Eq k, Num k, Ord b, Show b) =>
+bindTA' :: (Eq k, Num k, Ord b) =>
     Vect k (TensorAlgebra a) -> (a -> Vect k (TensorAlgebra b)) -> Vect k (TensorAlgebra b)
 bindTA' = flip liftTA'
 -- Another way to think about this is variable substitution
@@ -149,31 +148,31 @@ injectSym' :: Num k => a -> Vect k (SymmetricAlgebra a)
 injectSym' = injectSym . return
 -- injectSym' a = return (Sym 1 [a])
 
-liftSym :: (Eq k, Num k, Ord b, Show b, Algebra k b) =>
+liftSym :: (Eq k, Num k, Ord b, Algebra k b) =>
      (Vect k a -> Vect k b) -> Vect k (SymmetricAlgebra a) -> Vect k b
 liftSym f = linear (\(Sym _ xs) -> product [f (return x) | x <- xs])
 
-liftSym' :: (Eq k, Num k, Ord b, Show b, Algebra k b) =>
+liftSym' :: (Eq k, Num k, Ord b, Algebra k b) =>
      (a -> Vect k b) -> Vect k (SymmetricAlgebra a) -> Vect k b
 liftSym' = liftSym . linear
 -- liftSym' f = linear (\(Sym _ xs) -> product [f x | x <- xs])
 
-fmapSym :: (Eq k, Num k, Ord b, Show b) =>
+fmapSym :: (Eq k, Num k, Ord b) =>
     (Vect k a -> Vect k b) -> Vect k (SymmetricAlgebra a) -> Vect k (SymmetricAlgebra b)
 fmapSym f = liftSym (injectSym . f)
 -- fmapSym f = linear (\(Sym _ xs) -> product [injectSym (f (return x)) | x <- xs])
 
-fmapSym' :: (Eq k, Num k, Ord b, Show b) =>
+fmapSym' :: (Eq k, Num k, Ord b) =>
     (a -> b) -> Vect k (SymmetricAlgebra a) -> Vect k (SymmetricAlgebra b)
 fmapSym' = fmapSym . fmap
 -- fmapSym' f = liftSym' (injectSym' . f)
 -- fmapSym' f = linear (\(Sym _ xs) -> product [injectSym' (f x) | x <- xs])
 
-bindSym :: (Eq k, Num k, Ord b, Show b) =>
+bindSym :: (Eq k, Num k, Ord b) =>
     Vect k (SymmetricAlgebra a) -> (Vect k a -> Vect k (SymmetricAlgebra b)) -> Vect k (SymmetricAlgebra b)
 bindSym = flip liftSym
 
-bindSym' :: (Eq k, Num k, Ord b, Show b) =>
+bindSym' :: (Eq k, Num k, Ord b) =>
     Vect k (SymmetricAlgebra a) -> (a -> Vect k (SymmetricAlgebra b)) -> Vect k (SymmetricAlgebra b)
 bindSym' = flip liftSym'
 -- Another way to think about this is variable substitution
@@ -232,31 +231,31 @@ injectExt' :: Num k => a -> Vect k (ExteriorAlgebra a)
 injectExt' = injectExt . return
 -- injectExt' a = return (Ext 1 [a])
 
-liftExt :: (Eq k, Num k, Ord b, Show b, Algebra k b) =>
+liftExt :: (Eq k, Num k, Ord b, Algebra k b) =>
      (Vect k a -> Vect k b) -> Vect k (ExteriorAlgebra a) -> Vect k b
 liftExt f = linear (\(Ext _ xs) -> product [f (return x) | x <- xs])
 
-liftExt' :: (Eq k, Num k, Ord b, Show b, Algebra k b) =>
+liftExt' :: (Eq k, Num k, Ord b, Algebra k b) =>
      (a -> Vect k b) -> Vect k (ExteriorAlgebra a) -> Vect k b
 liftExt' = liftExt . linear
 -- liftExt' f = linear (\(Ext _ xs) -> product [f x | x <- xs])
 
-fmapExt :: (Eq k, Num k, Ord b, Show b) =>
+fmapExt :: (Eq k, Num k, Ord b) =>
     (Vect k a -> Vect k b) -> Vect k (ExteriorAlgebra a) -> Vect k (ExteriorAlgebra b)
 fmapExt f = liftExt (injectExt . f)
 -- fmapExt f = linear (\(Ext _ xs) -> product [injectExt (f (return x)) | x <- xs])
 
-fmapExt' :: (Eq k, Num k, Ord b, Show b) =>
+fmapExt' :: (Eq k, Num k, Ord b) =>
     (a -> b) -> Vect k (ExteriorAlgebra a) -> Vect k (ExteriorAlgebra b)
 fmapExt' = fmapExt . fmap
 -- fmapExt' f = liftExt' (injectExt' . f)
 -- fmapExt' f = linear (\(Ext _ xs) -> product [injectExt' (f x) | x <- xs])
 
-bindExt :: (Eq k, Num k, Ord b, Show b) =>
+bindExt :: (Eq k, Num k, Ord b) =>
     Vect k (ExteriorAlgebra a) -> (Vect k a -> Vect k (ExteriorAlgebra b)) -> Vect k (ExteriorAlgebra b)
 bindExt = flip liftExt
 
-bindExt' :: (Eq k, Num k, Ord b, Show b) =>
+bindExt' :: (Eq k, Num k, Ord b) =>
     Vect k (ExteriorAlgebra a) -> (a -> Vect k (ExteriorAlgebra b)) -> Vect k (ExteriorAlgebra b)
 bindExt' = flip liftExt'
 -- Another way to think about this is variable substitution

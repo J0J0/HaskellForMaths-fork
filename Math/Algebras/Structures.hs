@@ -54,7 +54,7 @@ class Bialgebra k b => HopfAlgebra k b where
     antipode :: Vect k b -> Vect k b
 
 
-instance (Eq k, Num k, Eq b, Ord b, Show b, Algebra k b) => Num (Vect k b) where
+instance (Eq k, Num k, Ord b, Algebra k b) => Num (Vect k b) where
     x+y = x <+> y
     negate x = negatev x
     -- negate (V ts) = V $ map (\(b,x) -> (b, negate x)) ts

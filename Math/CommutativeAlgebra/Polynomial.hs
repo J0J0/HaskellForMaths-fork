@@ -24,7 +24,7 @@ import Math.Algebras.Structures
 -- |In order to work with monomials, we need to be able to multiply them and divide them.
 -- Multiplication is defined by the Mon (monoid) class. Division is defined in this class.
 -- The functions here are primarily intended for internal use only.
-class (Eq m, Show m, Mon m) => Monomial m where
+class (Eq m, Mon m) => Monomial m where
     mdivides :: m -> m -> Bool
     mdiv :: m -> m -> m
     mgcd :: m -> m -> m
@@ -77,7 +77,7 @@ instance (Ord v) => Mon (MonImpl v) where
     munit = M 0 []
     mmult (M si xis) (M sj yjs) = M (si+sj) $ addmerge xis yjs
 
-instance (Ord v, Show v) => Monomial (MonImpl v) where
+instance (Ord v) => Monomial (MonImpl v) where
     mdivides (M si xis) (M sj yjs) = si <= sj && mdivides' xis yjs where
         mdivides' ((x,i):xis) ((y,j):yjs) =
             case compare x y of
@@ -159,7 +159,7 @@ lexvar :: v -> LexPoly Q v
 lexvar v = return $ Lex $ M 1 [(v,1)]
 -- lexvar = var
 
-instance (Eq k, Num k, Ord v, Show v) => Algebra k (Lex v) where
+instance (Eq k, Num k, Ord v) => Algebra k (Lex v) where
     unit x = x *> return munit
     mult xy = nf $ fmap (\(a,b) -> a `mmult` b) xy
 
@@ -193,7 +193,7 @@ glexvar :: v -> GlexPoly Q v
 glexvar v = return $ Glex $ M 1 [(v,1)]
 -- glexvar = var
 
-instance (Eq k, Num k, Ord v, Show v) => Algebra k (Glex v) where
+instance (Eq k, Num k, Ord v) => Algebra k (Glex v) where
     unit x = x *> return munit
     mult xy = nf $ fmap (\(a,b) -> a `mmult` b) xy
 
@@ -229,7 +229,7 @@ grevlexvar :: v -> GrevlexPoly Q v
 grevlexvar v = return $ Grevlex $ M 1 [(v,1)]
 -- grevlexvar = var
 
-instance (Eq k, Num k, Ord v, Show v) => Algebra k (Grevlex v) where
+instance (Eq k, Num k, Ord v) => Algebra k (Grevlex v) where
     unit x = x *> return munit
     mult xy = nf $ fmap (\(a,b) -> a `mmult` b) xy
 
@@ -288,7 +288,7 @@ instance (Eq k, Num k, Ord a, Mon a, Ord b, Mon b) => Algebra k (Elim2 a b) wher
 -- This is occasionally useful.
 
 -- |bind performs variable substitution
-bind :: (Eq k, Num k, MonomialConstructor m, Ord a, Show a, Algebra k a) =>
+bind :: (Eq k, Num k, MonomialConstructor m, Ord a, Algebra k a) =>
     Vect k (m v) -> (v -> Vect k a) -> Vect k a
 v `bind` f = linear (\m -> product [f x ^ i | (x,i) <- mindices m]) v
 -- V ts `bind` f = sum [c *> product [f x ^ i | (x,i) <- mindices m] | (m, c) <- ts] 
@@ -305,16 +305,16 @@ eval :: (Eq k, Num k, MonomialConstructor m, Eq (m v), Show v) =>
 eval f vs = unwrap $ f `bind` sub
     where sub x = case lookup (var x) vs of
                   Just xval -> xval *> return ()
-                  Nothing -> error ("eval: no binding given for " ++ show x)
+                  Nothing -> error ("eval: no binding given for " ++ show x)  -- is this worth "Show v"?
 
 -- |Perform variable substitution on a polynomial.
 -- For example @subst (x*z-y^2) [(x,u^2),(y,u*v),(z,v^2)]@ performs the substitution x -> u^2, y -> u*v, z -> v^2.
-subst :: (Eq k, Num k, MonomialConstructor m, Eq (m u), Show u, Ord (m v), Show (m v), Algebra k (m v)) =>
+subst :: (Eq k, Num k, MonomialConstructor m, Eq (m u), Show u, Ord (m v), Algebra k (m v)) =>
     Vect k (m u) -> [(Vect k (m u), Vect k (m v))] -> Vect k (m v)
 subst f vs = f `bind` sub
     where sub x = case lookup (var x) vs of
                   Just xsub -> xsub
-                  Nothing -> error ("eval: no binding given for " ++ show x)
+                  Nothing -> error ("eval: no binding given for " ++ show x)  -- is this worth "Show u"?
 -- The type could be more general than this, but haven't so far found a use case
 
 -- |List the variables used in a polynomial
