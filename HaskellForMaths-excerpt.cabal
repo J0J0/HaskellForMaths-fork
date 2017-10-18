@@ -1,8 +1,8 @@
    Name:                HaskellForMaths-excerpt
    Version:             0.4.8
    Category:            Math
-   Description:         A library of maths code in the areas of combinatorics, group theory, commutative algebra, and non-commutative algebra. The library is mainly intended as an educational resource, but does have efficient implementations of several fundamental algorithms.
-   Synopsis:            (commutative) algebra
+   Description:         pretty stripped down version of the HaskellForMaths package
+   Synopsis:            tensor/exterior algebra
    License:             BSD3
    License-file:        license.txt
    Author:              David Amos
