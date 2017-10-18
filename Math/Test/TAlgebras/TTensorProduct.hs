@@ -14,7 +14,7 @@ import Math.Core.Field
 -- import Math.Algebra.Field.Base
 import Math.Test.TAlgebras.TVectorSpace
 
-import Prelude as P
+import qualified Prelude as P
 import Control.Category as C
 import Control.Arrow
 
@@ -25,6 +25,7 @@ quickCheckTensorProduct = do
     quickCheck prop_TensorFunctor
 
 
+{-
 type DirectSum k u v =
     (u ~ Vect k a, v ~ Vect k b) => Vect k (DSum a b)
 
@@ -32,6 +33,7 @@ type TensorProd k u v =
     (u ~ Vect k a, v ~ Vect k b) => Vect k (Tensor a b)
 
 type En = Vect Q EBasis
+-}
 
 {-
 -- But then you need to make sure that you run GHCi with -XTypeFamilies, otherwise:
