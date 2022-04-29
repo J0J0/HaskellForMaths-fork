@@ -10,7 +10,7 @@
 --   Homepage:            http://haskellformaths.blogspot.com/
    Stability:           experimental
    Build-Type:          Simple
-   Cabal-Version:       >=1.2
+   Cabal-Version:       >=1.8
 
    Extra-source-files:
         Math/Test/TField.hs,
