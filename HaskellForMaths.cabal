@@ -1,5 +1,5 @@
    Name:                HaskellForMaths
-   Version:             0.4.8
+   Version:             0.4.9
    Category:            Math
    Description:         A library of maths code in the areas of combinatorics, group theory, commutative algebra, and non-commutative algebra. The library is mainly intended as an educational resource, but does have efficient implementations of several fundamental algorithms.
    Synopsis:            Combinatorics, group theory, commutative algebra, non-commutative algebra
