@@ -1,37 +1,49 @@
-   Name:                HaskellForMaths-excerpt
-   Version:             0.4.8
-   Category:            Math
-   Description:         pretty stripped down version of the HaskellForMaths package
-   Synopsis:            tensor/exterior algebra
-   License:             BSD3
-   License-file:        license.txt
-   Author:              David Amos
---   Maintainer:          haskellformaths-at-gmail-dot-com
---   Homepage:            http://haskellformaths.blogspot.com/
-   Stability:           experimental
-   Build-Type:          Simple
-   Cabal-Version:       >=1.8
+Cabal-Version: 2.0
 
-   Extra-source-files:
-        Math/Test/TField.hs,
-        Math/Test/TestAll.hs
-        Math/Test/TAlgebras/TVectorSpace.hs
-        Math/Test/TAlgebras/TTensorProduct.hs
-        Math/Test/TAlgebras/TStructures.hs
-        Math/Test/TCommutativeAlgebra/TPolynomial.hs
-        Math/Test/TCommutativeAlgebra/TGroebnerBasis.hs
-        Math/Test/TCore/TField.hs
-        Math/Test/TCore/TUtils.hs
+Name:        HaskellForMaths-excerpt
+Version:     0.4.8
+Category:    Math
+Synopsis:    Symmetric/Exterior/Polynomial algebras from the HaskellForMaths package
+Description: Pretty stripped down version of the [HaskellForMaths package (v0.4.8)](https://hackage.haskell.org/package/HaskellForMaths).
+             .
+             Most stuff has been removed, except for the modules
+             "Math.Algebras.TensorAlgebra",
+             "Math.Algebras.TensorProduct",
+             "Math.CommutativeAlgebra.Polynomial",
+             "Math.CommutativeAlgebra.GroebnerBasis",
+             and their dependencies.
 
-   Library
-     Build-Depends:     base >= 2 && < 5, containers, array, random
-     Exposed-modules:
-        Math.Algebra.LinearAlgebra,
-        Math.Algebra.Field.Base, Math.Algebra.Field.Extension,
-        Math.Algebras.Structures, Math.Algebras.TensorAlgebra,
-        Math.Algebras.TensorProduct, Math.Algebras.VectorSpace,
-        Math.Common.IntegerAsType, Math.Common.ListSet,
-        Math.CommutativeAlgebra.Polynomial, Math.CommutativeAlgebra.GroebnerBasis,
-        Math.Core.Utils, Math.Core.Field
+Author:       David Amos
+License:      BSD3
+License-file: license.txt
+Build-Type:   Simple
+tested-with:  GHC == 9.0.2
 
-     ghc-options:       -w
+Extra-source-files: Math/Test/TField.hs
+                  , Math/Test/TestAll.hs
+                  , Math/Test/TAlgebras/TVectorSpace.hs
+                  , Math/Test/TAlgebras/TTensorProduct.hs
+                  , Math/Test/TAlgebras/TStructures.hs
+                  , Math/Test/TCommutativeAlgebra/TPolynomial.hs
+                  , Math/Test/TCommutativeAlgebra/TGroebnerBasis.hs
+                  , Math/Test/TCore/TField.hs
+                  , Math/Test/TCore/TUtils.hs
+
+Library
+  Build-Depends: base ^>= 4.15.1.0
+               , containers ^>= 0.6.4.1
+  
+  Exposed-modules: Math.Algebras.VectorSpace
+                 , Math.Algebras.Structures
+                 , Math.Algebras.TensorAlgebra
+                 , Math.Algebras.TensorProduct
+                 , Math.CommutativeAlgebra.Polynomial
+                 , Math.CommutativeAlgebra.GroebnerBasis
+                 , Math.Algebra.LinearAlgebra
+                 , Math.Core.Field
+                 , Math.Core.Utils
+                 , Math.Common.IntegerAsType
+                 , Math.Common.ListSet
+  
+  default-language: Haskell2010
+  ghc-options: -w

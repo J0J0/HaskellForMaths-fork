@@ -13,8 +13,6 @@ import Math.Algebras.VectorSpace
 import Math.Algebras.TensorProduct
 import Math.Algebras.Structures
 
-import Math.Algebra.Field.Base
-
 
 -- TENSOR ALGEBRA
 
